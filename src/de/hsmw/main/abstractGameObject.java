@@ -15,6 +15,8 @@ public abstract class abstractGameObject {
 
     public abstract void tick();
     public abstract void render(Graphics g);
+    public abstract Rectangle getBounds();
+
 
     public void setX(int x){
         this.x = x;
