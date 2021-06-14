@@ -13,6 +13,8 @@ public class Player extends abstractGameObject {
     public void tick() {
         x += velX;
         y += velY;
+        x = Game.clamp(x,0,Game.WIDTH-32);
+        y = Game.clamp(y,0,Game.HEIGHT-64);
     }
 
     public void render(Graphics g) {
@@ -22,4 +24,5 @@ public class Player extends abstractGameObject {
             g.setColor(Color.blue);
         g.fillRect(x, y, 32, 32);
     }
+
 }

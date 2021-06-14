@@ -26,20 +26,9 @@ public class KeyInput extends KeyAdapter {
                 if (key == KeyEvent.VK_S)
                     tempObj.setVelY((5));
             }
-
-            if (tempObj.getId() == ID.Player2) {
-                //keyEvent Player2
-                if (key == KeyEvent.VK_UP)
-                    tempObj.setVelY((-5));
-                if (key == KeyEvent.VK_LEFT)
-                    tempObj.setVelX((-5));
-                if (key == KeyEvent.VK_RIGHT)
-                    tempObj.setVelX((5));
-                if (key == KeyEvent.VK_DOWN)
-                    tempObj.setVelY((5));
-            }
-
         }
+        if(key == KeyEvent.VK_ESCAPE)
+            System.exit(0);
     }
 
     public void keyReleased(KeyEvent ke) {
@@ -58,19 +47,6 @@ public class KeyInput extends KeyAdapter {
                 if (key == KeyEvent.VK_S)
                     tempObj.setVelY((0));
             }
-
-            if (tempObj.getId() == ID.Player2) {
-                //keyEvent Player2
-                if (key == KeyEvent.VK_UP)
-                    tempObj.setVelY((0));
-                if (key == KeyEvent.VK_LEFT)
-                    tempObj.setVelX((0));
-                if (key == KeyEvent.VK_RIGHT)
-                    tempObj.setVelX((0));
-                if (key == KeyEvent.VK_DOWN)
-                    tempObj.setVelY((0));
-            }
-
         }
     }
 }

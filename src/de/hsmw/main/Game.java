@@ -10,15 +10,17 @@ public class Game extends Canvas implements Runnable {
     private boolean running = false;
     private Handler handler;
     private Random r = new Random();
+    HUD hud;
 
     public Game() {
         handler = new Handler();
         this.addKeyListener(new KeyInput(handler));
 
         new Window(WIDTH, HEIGHT, "newGame", this);
-
+        hud = new HUD();
         handler.addObject(new Player(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.Player));
-        handler.addObject(new Player(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.Player2));
+
+        handler.addObject(new BasicEnemy(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.Enemy));
     }
 
     public synchronized void start() {
@@ -59,7 +61,7 @@ public class Game extends Canvas implements Runnable {
             frames++;
             if (System.currentTimeMillis() - timer > 1000) {
                 timer += 1000;
-               System.out.println("FPS: " + frames);
+                System.out.println("FPS: " + frames);
                 frames = 0;
             }
         }
@@ -78,13 +80,22 @@ public class Game extends Canvas implements Runnable {
         g.fillRect(0, 0, WIDTH, HEIGHT);
 
         handler.render(g);
-
+        hud.render(g);
         g.dispose();
         bs.show();
     }
 
     private void tick() {
         handler.tick();
+        hud.tick();
+    }
+
+    public static int clamp(int var, int min, int max) {
+        if (var >= max)
+            var = max;
+        else if (var <= min)
+            var = min;
+        return var;
     }
 
     public static void main(String[] args) {
