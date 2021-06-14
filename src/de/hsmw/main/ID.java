@@ -1,2 +1,6 @@
-package de.hsmw.main;public enum ID {
+package de.hsmw.main;
+
+public enum ID {
+    Player(),
+    Enemy();
 }
