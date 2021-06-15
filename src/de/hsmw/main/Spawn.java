@@ -30,6 +30,11 @@ public class Spawn {
                 handler.addObject(new FastEnemy(r.nextInt(Game.WIDTH - 45), r.nextInt(HEIGHT - 45), ID.FastEnemy, handler));
                 hud.setEnemies(hud.getEnemies() + 1);
             }
+            if (hud.getLevel() % 7 == 0) {
+                handler.addObject(new SmartEnemy(r.nextInt(Game.WIDTH - 120), r.nextInt(HEIGHT - r.nextInt(60)), ID.SmartEnemy, handler));
+                hud.setEnemies(hud.getEnemies() + 1);
+            }
+
             if (hud.getLevel() % 10 == 0) {
                 for (int i = 0; i < 3; i++)
                     handler.removeEnemy();

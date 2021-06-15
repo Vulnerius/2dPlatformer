@@ -26,11 +26,11 @@ public class Heal extends abstractGameObject {
     public void render(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setColor(Color.green);
-        g2d.fillOval(x, y, 12, 12);
+        g2d.fillOval((int)x, (int)y, 12, 12);
     }
 
     @Override
     public Rectangle getBounds() {
-        return new Rectangle(x, y, 12, 12);
+        return new Rectangle((int)x, (int)y, 12, 12);
     }
 }

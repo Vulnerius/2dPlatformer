@@ -8,11 +8,10 @@ public class Game extends Canvas implements Runnable {
     public static final int WIDTH = 640, HEIGHT = WIDTH / 12 * 9;
     private Thread thread;
     private boolean running = false;
-    private Handler handler;
-    private Random r = new Random();
-    private HUD hud;
-    private Spawn spawner;
-
+    private final Handler handler;
+    private final Random r = new Random();
+    private final HUD hud;
+    private final Spawn spawner;
 
 
     public Game() {
@@ -24,9 +23,7 @@ public class Game extends Canvas implements Runnable {
         spawner = new Spawn(handler,hud);
 
         handler.addObject(new Player(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.Player, handler));
-
         handler.addObject(new BasicEnemy(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.BasicEnemy,handler));
-
     }
 
 
@@ -88,6 +85,7 @@ public class Game extends Canvas implements Runnable {
 
         handler.render(g);
         hud.render(g);
+
         g.dispose();
         bs.show();
     }
@@ -98,7 +96,7 @@ public class Game extends Canvas implements Runnable {
         spawner.tick();
     }
 
-    public static int clamp(int var, int min, int max) {
+    public static float clamp(float var, float min, float max) {
         if (var >= max)
             var = max;
         else if (var <= min)

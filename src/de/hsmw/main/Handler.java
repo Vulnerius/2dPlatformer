@@ -13,6 +13,7 @@ public class Handler {
             tempObj.tick();
         }
     }
+
     public void render(Graphics g){
         for(int i = 0; i < object.size(); i++){
             abstractGameObject tempObj = object.get(i);

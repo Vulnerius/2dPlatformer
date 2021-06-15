@@ -5,12 +5,10 @@ import java.awt.*;
 public class FastEnemy extends abstractGameObject{
 
         private Handler handler;
-        private ID id;
 
-        public FastEnemy(int x, int y, ID id, Handler handler) {
+        public FastEnemy(float x, float y, ID id, Handler handler) {
             super(x, y, id);
             this.handler = handler;
-            this.id = id;
             velX = 7;
             velY = 7;
         }
@@ -29,12 +27,12 @@ public class FastEnemy extends abstractGameObject{
         @Override
         public void render(Graphics g) {
             g.setColor(Color.cyan);
-            g.fillRect(x,y,16,16);
+            g.fillRect((int)x,(int)y,16,16);
         }
 
         @Override
         public Rectangle getBounds() {
-            return new Rectangle(x,y,16,16);
+            return new Rectangle((int)x,(int)y,16,16);
         }
 
 }

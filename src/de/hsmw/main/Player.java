@@ -33,6 +33,10 @@ public class Player extends abstractGameObject {
                 if (getBounds().intersects(abg.getBounds())) {
                     HUD.HEALTH -= 5;
                 }
+            } else if (abg.getId() == ID.SmartEnemy){
+                if (getBounds().intersects(abg.getBounds())) {
+                    HUD.HEALTH -= 3;
+                }
             }
         }
     }
@@ -49,12 +53,12 @@ public class Player extends abstractGameObject {
         if (id == ID.Player2)
             g.setColor(Color.blue);
 
-        g.fillRect(x, y, 32, 32);
+        g.fillRect((int)x, (int)y, 32, 32);
     }
 
     @Override
     public Rectangle getBounds() {
-        return new Rectangle(x, y, 32, 32);
+        return new Rectangle((int)x,(int) y, 32, 32);
     }
 
 }

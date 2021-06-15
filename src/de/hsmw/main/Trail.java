@@ -12,7 +12,7 @@ public class Trail extends abstractGameObject{
 
 //life = 0.01 - 0.1
 
-    public Trail(int x, int y, ID id, Handler handler, Color color, int width, int height, float life) {
+    public Trail(float x, float y, ID id, Handler handler, Color color, int width, int height, float life) {
         super(x, y, id);
         this.handler = handler;
         this.id = id;
@@ -41,7 +41,7 @@ public class Trail extends abstractGameObject{
         g2d.setComposite(makeTransparent(alpha));
 
         g.setColor(color);
-        g.fillRect(x,y,width,height);
+        g.fillRect((int)x,(int)y,width,height);
 
         g2d.setComposite(makeTransparent(1));
 
@@ -50,6 +50,6 @@ public class Trail extends abstractGameObject{
 
     @Override
     public Rectangle getBounds() {
-        return new Rectangle(x,y,14,14);
+        return new Rectangle((int)x,(int)y,14,14);
     }
 }

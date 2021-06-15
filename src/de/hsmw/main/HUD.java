@@ -4,10 +4,10 @@ package de.hsmw.main;
 import java.awt.*;
 
 public class HUD {
-    public static int HEALTH = 100;
-    private int greenValue = 255;
+    public static float HEALTH = 100;
+    private float greenValue = 255;
     private int score = 0;
-    private int level = 1;
+    private int level = 6;
     private int enemies = 1;
 
     public void tick(){
@@ -20,8 +20,8 @@ public class HUD {
     public void render(Graphics g){
         g.setColor(Color.darkGray);
         g.fillRect(15,15,200,32);
-        g.setColor(new Color(95,greenValue,0));
-        g.fillRect(15,15,HEALTH*2,32);
+        g.setColor(new Color(95,(int)greenValue,0));
+        g.fillRect(15,15,(int) HEALTH*2,32);
         g.setColor(Color.white);
 
         g.drawString("Score: " + score, 10,60);
@@ -53,11 +53,11 @@ public class HUD {
         return score;
     }
 
-    public static int getHEALTH() {
+    public static float getHEALTH() {
         return HEALTH;
     }
 
-    public static void setHEALTH(int HEALTH) {
+    public static void setHEALTH(float HEALTH) {
         HUD.HEALTH = HEALTH;
     }
 }

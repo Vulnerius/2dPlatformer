@@ -3,11 +3,11 @@ package de.hsmw.main;
 import java.awt.*;
 
 public abstract class abstractGameObject {
-    protected int x, y;
+    protected float x, y;
     protected ID id;
-    protected int velX, velY;
+    protected float velX, velY;
 
-    public abstractGameObject(int x, int y, ID id){
+    public abstractGameObject(float x, float y, ID id){
         this.x = x;
         this.y = y;
         this.id = id;
@@ -18,37 +18,37 @@ public abstract class abstractGameObject {
     public abstract Rectangle getBounds();
 
 
-    public void setX(int x){
+    public void setX(float x){
         this.x = x;
     }
-    public void setY(int y){
+    public void setY(float y){
         this.y = y;
     }
     public void setID(ID id){
         this.id = id;
     }
 
-    public void setVelX(int velX) {
+    public void setVelX(float velX) {
         this.velX = velX;
     }
 
-    public void setVelY(int velY) {
+    public void setVelY(float velY) {
         this.velY = velY;
     }
 
-    public int getVelX() {
+    public float getVelX() {
         return velX;
     }
 
-    public int getVelY() {
+    public float getVelY() {
         return velY;
     }
 
-    public int getY() {
+    public float getY() {
         return y;
     }
 
-    public int getX() {
+    public float getX() {
         return x;
     }
 
