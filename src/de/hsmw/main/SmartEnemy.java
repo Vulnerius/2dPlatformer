@@ -19,7 +19,7 @@ public class SmartEnemy extends abstractGameObject {
 
     @Override
     public void tick() {
-        handler.addObject(new Trail(x, y, ID.Trail, handler, Color.magenta, 16, 16, 0.083f));
+        handler.addObject(new Trail(x, y, ID.Trail, handler, Color.magenta, 16, 16, 0.078f));
         x += velX;
         y += velY;
 

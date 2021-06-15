@@ -35,4 +35,8 @@ public class Handler {
             }
         }
     }
+
+    public void removeAll(){
+        object.clear();
+    }
 }

@@ -40,8 +40,8 @@ public class Spawn {
                     handler.removeEnemy();
                 hud.setEnemies(hud.getEnemies()-3);
             }
-            if(HUD.HEALTH < 20){
-                handler.addObject(new Heal(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.Heal,handler));
+            if(hud.getHEALTH() < 20){
+                handler.addObject(new Heal(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.Heal,handler,hud));
             }
         }
 

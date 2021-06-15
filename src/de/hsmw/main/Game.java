@@ -12,18 +12,25 @@ public class Game extends Canvas implements Runnable {
     private final Random r = new Random();
     private final HUD hud;
     private final Spawn spawner;
+    private Menu menu;
 
+    public enum State {
+        Menu,
+        Game,
+        End,
+    }
+    public State gameState = State.Menu;
 
     public Game() {
         handler = new Handler();
+        hud = new HUD();
+        menu = new Menu(this,handler,hud);
         this.addKeyListener(new KeyInput(handler));
+        this.addMouseListener(menu);
 
         new Window(WIDTH, HEIGHT, "newGame", this);
-        hud = new HUD();
-        spawner = new Spawn(handler,hud);
+        spawner = new Spawn(handler, hud);
 
-        handler.addObject(new Player(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.Player, handler));
-        handler.addObject(new BasicEnemy(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.BasicEnemy,handler));
     }
 
 
@@ -84,7 +91,12 @@ public class Game extends Canvas implements Runnable {
         g.fillRect(0, 0, WIDTH, HEIGHT);
 
         handler.render(g);
-        hud.render(g);
+
+        if (gameState == State.Game) {
+            hud.render(g);
+        }  else if( gameState == State.Menu || gameState == State.End){
+            menu.render(g);
+        }
 
         g.dispose();
         bs.show();
@@ -92,8 +104,16 @@ public class Game extends Canvas implements Runnable {
 
     private void tick() {
         handler.tick();
-        hud.tick();
-        spawner.tick();
+        if (gameState == State.Game) {
+            hud.tick();
+            spawner.tick();
+            if(hud.getHEALTH() <= 0){
+                handler.removeAll();
+                gameState = State.End;
+            }
+        } else if( gameState == State.Menu || gameState == State.End){
+            menu.tick();
+        }
     }
 
     public static float clamp(float var, float min, float max) {
@@ -102,6 +122,10 @@ public class Game extends Canvas implements Runnable {
         else if (var <= min)
             var = min;
         return var;
+    }
+
+    public void setGameState(State gameState) {
+        this.gameState = gameState;
     }
 
     public static void main(String[] args) {

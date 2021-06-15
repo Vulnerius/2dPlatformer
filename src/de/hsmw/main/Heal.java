@@ -4,10 +4,12 @@ import java.awt.*;
 
 public class Heal extends abstractGameObject {
     private final Handler handler;
+    private HUD hud;
 
-    public Heal(int x, int y, ID id, Handler handler) {
+    public Heal(int x, int y, ID id, Handler handler, HUD hud) {
         super(x, y, id);
         this.handler = handler;
+        this.hud = hud;
     }
 
     @Override
@@ -16,7 +18,7 @@ public class Heal extends abstractGameObject {
             abstractGameObject abg = handler.object.get(i);
             if (abg.getId() == ID.Player)
                 if (this.getBounds().intersects(abg.getBounds())) {
-                    HUD.HEALTH += 40;
+                    hud.setHEALTH(hud.getHEALTH()+40);
                     handler.removeObject(this);
                 }
         }

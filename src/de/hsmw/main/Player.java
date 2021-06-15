@@ -6,11 +6,12 @@ import java.util.Random;
 public class Player extends abstractGameObject {
     private Random r = new Random();
     private final Handler handler;
+    private HUD hud;
 
-    public Player(int x, int y, ID id, Handler handler) {
+    public Player(int x, int y, ID id, Handler handler, HUD hud) {
         super(x, y, id);
         this.handler = handler;
-
+        this.hud = hud;
     }
 
     public void tick() {
@@ -27,15 +28,15 @@ public class Player extends abstractGameObject {
         for (abstractGameObject abg : handler.object) {
             if (abg.getId() == ID.BasicEnemy) {
                 if (getBounds().intersects(abg.getBounds())) {
-                    HUD.HEALTH -= 1;
+                    hud.setHEALTH(hud.getHEALTH() -1);
                 }
             } else if (abg.getId() == ID.FastEnemy) {
                 if (getBounds().intersects(abg.getBounds())) {
-                    HUD.HEALTH -= 5;
+                    hud.setHEALTH(hud.getHEALTH() -3);
                 }
             } else if (abg.getId() == ID.SmartEnemy){
                 if (getBounds().intersects(abg.getBounds())) {
-                    HUD.HEALTH -= 3;
+                    hud.setHEALTH(hud.getHEALTH() -5);
                 }
             }
         }

@@ -4,10 +4,10 @@ package de.hsmw.main;
 import java.awt.*;
 
 public class HUD {
-    public static float HEALTH = 100;
+    public float HEALTH = 100;
     private float greenValue = 255;
     private int score = 0;
-    private int level = 6;
+    private int level = 1;
     private int enemies = 1;
 
     public void tick(){
@@ -53,11 +53,11 @@ public class HUD {
         return score;
     }
 
-    public static float getHEALTH() {
+    public float getHEALTH() {
         return HEALTH;
     }
 
-    public static void setHEALTH(float HEALTH) {
-        HUD.HEALTH = HEALTH;
+    public void setHEALTH(float HEALTH) {
+        this.HEALTH = HEALTH;
     }
 }
