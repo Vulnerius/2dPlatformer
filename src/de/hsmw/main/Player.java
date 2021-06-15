@@ -14,21 +14,24 @@ public class Player extends abstractGameObject {
     }
 
     public void tick() {
-        handler.addObject(new Trail(x,y,ID.Trail, handler, Color.WHITE, 32,32, 0.15f));
+        handler.addObject(new Trail(x, y, ID.Trail, handler, Color.WHITE, 32, 32, 0.15f));
         x += velX;
         y += velY;
-        x = Game.clamp(x,0,Game.WIDTH-32);
-        y = Game.clamp(y,0,Game.HEIGHT-64);
+        x = Game.clamp(x, 0, Game.WIDTH - 32);
+        y = Game.clamp(y, 0, Game.HEIGHT - 64);
 
         collision();
     }
 
     private void collision() {
-        for(abstractGameObject abg : handler.object){
-            if(abg.getId() == ID.Enemy){
-                if(getBounds().intersects(abg.getBounds())){
-                    //collision code
-                    HUD.HEALTH -= 2;
+        for (abstractGameObject abg : handler.object) {
+            if (abg.getId() == ID.BasicEnemy) {
+                if (getBounds().intersects(abg.getBounds())) {
+                    HUD.HEALTH -= 1;
+                }
+            } else if (abg.getId() == ID.FastEnemy) {
+                if (getBounds().intersects(abg.getBounds())) {
+                    HUD.HEALTH -= 5;
                 }
             }
         }
@@ -51,7 +54,7 @@ public class Player extends abstractGameObject {
 
     @Override
     public Rectangle getBounds() {
-        return new Rectangle(x,y,32,32);
+        return new Rectangle(x, y, 32, 32);
     }
 
 }

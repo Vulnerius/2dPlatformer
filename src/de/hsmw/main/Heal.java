@@ -12,7 +12,6 @@ public class Heal extends abstractGameObject {
 
     @Override
     public void tick() {
-
         for (int i = 0; i < handler.object.size(); i++){
             abstractGameObject abg = handler.object.get(i);
             if (abg.getId() == ID.Player)

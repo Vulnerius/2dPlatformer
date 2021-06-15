@@ -28,7 +28,7 @@ public class Handler {
 
     public void removeEnemy() {
         for(abstractGameObject abO : object){
-            if(abO.getId() == ID.Enemy){
+            if(abO.getId() == ID.BasicEnemy || abO.getId() == ID.FastEnemy){
                 removeObject(abO);
                 break;
             }

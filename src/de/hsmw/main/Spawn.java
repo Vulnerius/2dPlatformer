@@ -24,10 +24,10 @@ public class Spawn {
 
             if (hud.getLevel() % 3 == 0) {
                 hud.setEnemies(hud.getEnemies() + 1);
-                handler.addObject(new BasicEnemy(r.nextInt(Game.WIDTH), r.nextInt(HEIGHT), ID.Enemy, handler));
+                handler.addObject(new BasicEnemy(r.nextInt(Game.WIDTH), r.nextInt(HEIGHT), ID.BasicEnemy, handler));
             }
             if (hud.getLevel() % 5 == 0) {
-                handler.addObject(new FastEnemy(r.nextInt(Game.WIDTH - 45), r.nextInt(HEIGHT - 45), ID.Enemy, handler));
+                handler.addObject(new FastEnemy(r.nextInt(Game.WIDTH - 45), r.nextInt(HEIGHT - 45), ID.FastEnemy, handler));
                 hud.setEnemies(hud.getEnemies() + 1);
             }
             if (hud.getLevel() % 10 == 0) {
