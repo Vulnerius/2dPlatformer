@@ -10,7 +10,10 @@ public class Game extends Canvas implements Runnable {
     private boolean running = false;
     private Handler handler;
     private Random r = new Random();
-    HUD hud;
+    private HUD hud;
+    private Spawn spawner;
+
+
 
     public Game() {
         handler = new Handler();
@@ -18,12 +21,14 @@ public class Game extends Canvas implements Runnable {
 
         new Window(WIDTH, HEIGHT, "newGame", this);
         hud = new HUD();
+        spawner = new Spawn(handler,hud);
+
         handler.addObject(new Player(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.Player, handler));
 
-        handler.addObject(new BasicEnemy(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.BasicEnemy,handler));
-        handler.addObject(new BasicEnemy(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.BasicEnemy,handler));
-        handler.addObject(new BasicEnemy(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.BasicEnemy,handler));
+        handler.addObject(new BasicEnemy(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.Enemy,handler));
+
     }
+
 
     public synchronized void start() {
         thread = new Thread(this);
@@ -90,6 +95,7 @@ public class Game extends Canvas implements Runnable {
     private void tick() {
         handler.tick();
         hud.tick();
+        spawner.tick();
     }
 
     public static int clamp(int var, int min, int max) {

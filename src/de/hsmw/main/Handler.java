@@ -25,4 +25,13 @@ public class Handler {
     public void removeObject(abstractGameObject ob){
         object.remove(ob);
     }
+
+    public void removeEnemy() {
+        for(abstractGameObject abO : object){
+            if(abO.getId() == ID.Enemy){
+                removeObject(abO);
+                break;
+            }
+        }
+    }
 }

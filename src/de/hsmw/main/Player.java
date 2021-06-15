@@ -4,15 +4,17 @@ import java.awt.*;
 import java.util.Random;
 
 public class Player extends abstractGameObject {
-    Random r = new Random();
-    Handler handler;
+    private Random r = new Random();
+    private final Handler handler;
 
     public Player(int x, int y, ID id, Handler handler) {
         super(x, y, id);
         this.handler = handler;
+
     }
 
     public void tick() {
+        handler.addObject(new Trail(x,y,ID.Trail, handler, Color.WHITE, 32,32, 0.15f));
         x += velX;
         y += velY;
         x = Game.clamp(x,0,Game.WIDTH-32);
@@ -23,7 +25,7 @@ public class Player extends abstractGameObject {
 
     private void collision() {
         for(abstractGameObject abg : handler.object){
-            if(abg.getId() == ID.BasicEnemy || abg.getId() == ID.Trail){
+            if(abg.getId() == ID.Enemy){
                 if(getBounds().intersects(abg.getBounds())){
                     //collision code
                     HUD.HEALTH -= 2;

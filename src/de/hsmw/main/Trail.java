@@ -41,9 +41,11 @@ public class Trail extends abstractGameObject{
         g2d.setComposite(makeTransparent(alpha));
 
         g.setColor(color);
-        g.fillRect(x,y,14,14);
+        g.fillRect(x,y,width,height);
 
         g2d.setComposite(makeTransparent(1));
+
+        g.setColor(Color.white);
     }
 
     @Override

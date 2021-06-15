@@ -16,7 +16,7 @@ public class BasicEnemy extends abstractGameObject{
 
     @Override
     public void tick() {
-        handler.addObject(new Trail(x,y,ID.Trail, handler, Color.red, 16,16,0.025f));
+        handler.addObject(new Trail(x,y,ID.Trail, handler, Color.red, 16,16,0.032f));
         x += velX;
         y += velY;
         if( y <= 0 || y>= Game.HEIGHT - 32)
