@@ -8,4 +8,5 @@ public enum ID {
     SmartEnemy(),
     Trail(),
     Heal(),
+    Particle(),
 }

@@ -28,6 +28,7 @@ public class Menu extends MouseAdapter {
         if (game.gameState == Game.State.Menu)
             if (hovering(mx, my, 250, 120, 150, 64)) {
                 game.gameState = Game.State.Game;
+                handler.removeAll();
                 handler.addObject(new Player(WIDTH / 2 - 32, HEIGHT / 2 - 16, ID.Player, handler,hud));
                 handler.addObject(new SmartEnemy(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.BasicEnemy, handler));
             }

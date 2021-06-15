@@ -31,6 +31,9 @@ public class Game extends Canvas implements Runnable {
         new Window(WIDTH, HEIGHT, "newGame", this);
         spawner = new Spawn(handler, hud);
 
+        for(int i = 0; i < 7; i++)
+            handler.addObject(new MenuParticle(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.Particle,handler));
+
     }
 
 
@@ -110,6 +113,8 @@ public class Game extends Canvas implements Runnable {
             if(hud.getHEALTH() <= 0){
                 handler.removeAll();
                 gameState = State.End;
+                for(int i = 0; i < 7; i++)
+                    handler.addObject(new MenuParticle(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.Particle,handler));
             }
         } else if( gameState == State.Menu || gameState == State.End){
             menu.tick();
