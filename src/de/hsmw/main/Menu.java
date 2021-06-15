@@ -27,20 +27,32 @@ public class Menu extends MouseAdapter {
         //play-Button
         if (game.gameState == Game.State.Menu)
             if (hovering(mx, my, 250, 120, 150, 64)) {
-                game.gameState = Game.State.Select;
+                game.setGameState(Game.State.Select);
                 //AudioPlayer.getSound("menu_sound").play();
             }
         if (game.gameState == Game.State.Select) {
+            handler.addObject(new Player(WIDTH / 2 - 32, HEIGHT / 2 - 16, ID.Player, handler, hud));
+            handler.addObject(new SmartEnemy(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.BasicEnemy, handler));
+            handler.addObject(new FastEnemy(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.BasicEnemy, handler));
+            handler.addObject(new BasicEnemy(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.BasicEnemy, handler));
             //normal difficulty
             if (hovering(mx, my, 220, 140, 100, 50)) {
-                game.gameState = Game.State.Game;
+                game.setGameState(Game.State.Game);
                 game.diff = 0;
+                hud.setHEALTH(100);
+                hud.setScore(0);
+                hud.setLevel(14);
                 handler.removeAll();
                 handler.addObject(new Player(WIDTH / 2 - 32, HEIGHT / 2 - 16, ID.Player, handler, hud));
                 handler.addObject(new SmartEnemy(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.BasicEnemy, handler));
-            } else if ( hovering(mx,my,220, 240, 100, 50)){
-                game.gameState = Game.State.Game;
+            }
+            //hard difficulty
+            else if ( hovering(mx,my,220, 240, 100, 50)){
+                game.setGameState(Game.State.Game);
                 game.diff = 1;
+                hud.setHEALTH(100);
+                hud.setScore(0);
+                hud.setLevel(14);
                 handler.removeAll();
                 handler.addObject(new Player(WIDTH / 2 - 32, HEIGHT / 2 - 16, ID.Player, handler, hud));
                 handler.addObject(new FastEnemy(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.BasicEnemy, handler));
@@ -55,8 +67,6 @@ public class Menu extends MouseAdapter {
                 //AudioPlayer.getSound("menu_sound").play();
                 game.setGameState(Game.State.Select);
                 hud.setHEALTH(100);
-                hud.setScore(0);
-                hud.setLevel(1);
                 handler.removeAll();
                 handler.addObject(new Player(WIDTH / 2 - 32, HEIGHT / 2 - 16, ID.Player, handler, hud));
                 handler.addObject(new SmartEnemy(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.BasicEnemy, handler));

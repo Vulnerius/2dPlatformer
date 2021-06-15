@@ -46,6 +46,9 @@ public class KeyInput extends KeyAdapter {
             if(game.gameState == Game.State.Game)
             Game.paused = !Game.paused;
         }
+        if(key == KeyEvent.VK_R){
+            game.setGameState(Game.State.Menu);
+        }
     }
 
     public void keyReleased(KeyEvent ke) {

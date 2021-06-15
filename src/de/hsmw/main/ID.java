@@ -9,4 +9,5 @@ public enum ID {
     Trail(),
     Heal(),
     Particle(),
+    Boss(),
 }

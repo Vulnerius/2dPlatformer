@@ -24,14 +24,14 @@ public class Spawn {
 
             if (hud.getLevel() % 3 == 0) {
                 hud.setEnemies(hud.getEnemies() + 1);
-                handler.addObject(new BasicEnemy(r.nextInt(Game.WIDTH), r.nextInt(HEIGHT), ID.BasicEnemy, handler));
+                handler.addObject(new BasicEnemy(r.nextInt(Game.WIDTH-75), r.nextInt(HEIGHT-38), ID.BasicEnemy, handler));
             }
             if (hud.getLevel() % 5 == 0) {
-                handler.addObject(new FastEnemy(r.nextInt(Game.WIDTH - 45), r.nextInt(HEIGHT - 45), ID.FastEnemy, handler));
+                handler.addObject(new FastEnemy(r.nextInt(Game.WIDTH - 90), r.nextInt(HEIGHT - 45), ID.FastEnemy, handler));
                 hud.setEnemies(hud.getEnemies() + 1);
             }
             if (hud.getLevel() % 7 == 0) {
-                handler.addObject(new SmartEnemy(r.nextInt(Game.WIDTH - 120), r.nextInt(HEIGHT - r.nextInt(60)), ID.SmartEnemy, handler));
+                handler.addObject(new SmartEnemy(r.nextInt(Game.WIDTH - 120), r.nextInt(HEIGHT - 60), ID.SmartEnemy, handler));
                 hud.setEnemies(hud.getEnemies() + 1);
             }
 
@@ -40,11 +40,36 @@ public class Spawn {
                     handler.removeEnemy();
                 hud.setEnemies(hud.getEnemies()-3);
             }
-            if(hud.getHEALTH() < 20){
+            if (hud.getLevel() % 15 == 0) {
+                for(int i = 0; i < handler.object.size(); i++){
+                    abstractGameObject temp = handler.object.get(i);
+                    if(temp.getId() == ID.Player){
+                        handler.removeAll();
+                        handler.addObject(temp);
+                        handler.addObject(new Boss((Game.WIDTH/2)-48, 0,ID.Boss,handler));
+                    }
+                }
+                hud.setEnemies(1);
+            }
+            if (hud.getLevel() % 18 == 0) {
+                for(int i = 0; i < handler.object.size(); i++){
+                    handler.addObject(new Heal(r.nextInt(WIDTH-120), r.nextInt(HEIGHT-60), ID.Heal,handler,hud));
+                    abstractGameObject temp = handler.object.get(i);
+                    if(temp.getId() == ID.Player){
+                        handler.removeAll();
+                        handler.addObject(temp);
+                    }
+                }
+                handler.addObject(new SmartEnemy(r.nextInt(Game.WIDTH - 120), r.nextInt(HEIGHT - 60), ID.SmartEnemy, handler));
+                handler.addObject(new FastEnemy(r.nextInt(Game.WIDTH-75), r.nextInt(HEIGHT-38), ID.BasicEnemy, handler));
+                handler.addObject(new FastEnemy(r.nextInt(Game.WIDTH-75), r.nextInt(HEIGHT-38), ID.BasicEnemy, handler));
+                hud.setEnemies(3);
+            }
+
+            if(hud.getHEALTH() < 33){
                 handler.addObject(new Heal(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.Heal,handler,hud));
             }
         }
-
 
     }
 

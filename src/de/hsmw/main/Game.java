@@ -30,7 +30,7 @@ public class Game extends Canvas implements Runnable {
         handler = new Handler();
         hud = new HUD();
         menu = new Menu(this, handler, hud);
-        this.addKeyListener(new KeyInput(handler,this));
+        this.addKeyListener(new KeyInput(handler, this));
         this.addMouseListener(menu);
 
 //        AudioPlayer.load();
@@ -103,7 +103,7 @@ public class Game extends Canvas implements Runnable {
 
         handler.render(g);
 
-        if(paused){
+        if (paused) {
             g.setColor(Color.red);
             g.drawString("Paused", 100, 100);
         }
@@ -122,9 +122,9 @@ public class Game extends Canvas implements Runnable {
 
         if (gameState == State.Game) {
             if (!paused) {
+                handler.tick();
                 hud.tick();
                 spawner.tick();
-                handler.tick();
                 if (hud.getHEALTH() <= 0) {
                     handler.removeAll();
                     gameState = State.End;
@@ -132,9 +132,9 @@ public class Game extends Canvas implements Runnable {
                         handler.addObject(new MenuParticle(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.Particle, handler));
                 }
             }
-        } else if (gameState == State.Menu || gameState == State.End || gameState == State.Select)  {
-            menu.tick();
+        } else if (gameState == State.Menu || gameState == State.End || gameState == State.Select) {
             handler.tick();
+            menu.tick();
         }
     }
 

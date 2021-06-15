@@ -38,6 +38,10 @@ public class Player extends abstractGameObject {
                 if (getBounds().intersects(abg.getBounds())) {
                     hud.setHEALTH(hud.getHEALTH() -5);
                 }
+            } else if(abg.getId() == ID.Boss){
+                if (getBounds().intersects(abg.getBounds())) {
+                    hud.setHEALTH(hud.getHEALTH() -7);
+                }
             }
         }
     }

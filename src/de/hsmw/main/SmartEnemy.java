@@ -37,7 +37,7 @@ public class SmartEnemy extends abstractGameObject {
         for (int i = 0; i < handler.object.size(); i++) {
             abstractGameObject ago = handler.object.get(i);
             if (ago.getId() == ID.SmartEnemy && !(ago.equals(this)))
-                if (getBounds().intersects(ago.getBounds()))
+                if (getBounds().equals(ago.getBounds()))
                     handler.removeObject(this);
         }
     }
