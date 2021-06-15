@@ -27,20 +27,38 @@ public class Menu extends MouseAdapter {
         //play-Button
         if (game.gameState == Game.State.Menu)
             if (hovering(mx, my, 250, 120, 150, 64)) {
-                game.gameState = Game.State.Game;
-                handler.removeAll();
-                handler.addObject(new Player(WIDTH / 2 - 32, HEIGHT / 2 - 16, ID.Player, handler,hud));
-                handler.addObject(new SmartEnemy(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.BasicEnemy, handler));
+                game.gameState = Game.State.Select;
+                //AudioPlayer.getSound("menu_sound").play();
             }
+        if (game.gameState == Game.State.Select) {
+            //normal difficulty
+            if (hovering(mx, my, 220, 140, 100, 50)) {
+                game.gameState = Game.State.Game;
+                game.diff = 0;
+                handler.removeAll();
+                handler.addObject(new Player(WIDTH / 2 - 32, HEIGHT / 2 - 16, ID.Player, handler, hud));
+                handler.addObject(new SmartEnemy(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.BasicEnemy, handler));
+            } else if ( hovering(mx,my,220, 240, 100, 50)){
+                game.gameState = Game.State.Game;
+                game.diff = 1;
+                handler.removeAll();
+                handler.addObject(new Player(WIDTH / 2 - 32, HEIGHT / 2 - 16, ID.Player, handler, hud));
+                handler.addObject(new FastEnemy(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.BasicEnemy, handler));
+            }
+        }
+
+        //AudioPlayer.getSound("menu_sound").play();
+
         //try-again Button
         if (game.gameState == Game.State.End)
             if (hovering(mx, my, 320, 200, 100, 50)) {
-                game.setGameState(Game.State.Game);
+                //AudioPlayer.getSound("menu_sound").play();
+                game.setGameState(Game.State.Select);
                 hud.setHEALTH(100);
                 hud.setScore(0);
                 hud.setLevel(1);
                 handler.removeAll();
-                handler.addObject(new Player(WIDTH / 2 - 32, HEIGHT / 2 - 16, ID.Player, handler,hud));
+                handler.addObject(new Player(WIDTH / 2 - 32, HEIGHT / 2 - 16, ID.Player, handler, hud));
                 handler.addObject(new SmartEnemy(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.BasicEnemy, handler));
             }
 
@@ -78,6 +96,14 @@ public class Menu extends MouseAdapter {
             g.drawString("You lost with a score of: " + hud.getScore(), 240, 160);
             g.drawRect(320, 200, 100, 50);
             g.drawString("Try again", 320, 230);
+        } else if (game.gameState == Game.State.Select) {
+            g.setFont(heading2);
+            g.drawString("Select difficulty", 50, 50);
+            g.setFont(heading3);
+            g.drawRect(220, 140, 100, 50);
+            g.drawString("normal", 240, 160);
+            g.drawRect(220, 240, 100, 50);
+            g.drawString("hard", 240, 260);
         }
 
     }

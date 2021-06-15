@@ -12,27 +12,35 @@ public class Game extends Canvas implements Runnable {
     private final Random r = new Random();
     private final HUD hud;
     private final Spawn spawner;
-    private Menu menu;
+    private final Menu menu;
+    public int diff = 0;
+    //0 = normal 1 = hard
+    public static boolean paused = false;
 
     public enum State {
         Menu,
+        Select,
         Game,
         End,
     }
+
     public State gameState = State.Menu;
 
     public Game() {
         handler = new Handler();
         hud = new HUD();
-        menu = new Menu(this,handler,hud);
-        this.addKeyListener(new KeyInput(handler));
+        menu = new Menu(this, handler, hud);
+        this.addKeyListener(new KeyInput(handler,this));
         this.addMouseListener(menu);
+
+//        AudioPlayer.load();
+        //Audioplayer.get("music").loop();
 
         new Window(WIDTH, HEIGHT, "newGame", this);
         spawner = new Spawn(handler, hud);
 
-        for(int i = 0; i < 7; i++)
-            handler.addObject(new MenuParticle(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.Particle,handler));
+        for (int i = 0; i < 7; i++)
+            handler.addObject(new MenuParticle(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.Particle, handler));
 
     }
 
@@ -95,9 +103,14 @@ public class Game extends Canvas implements Runnable {
 
         handler.render(g);
 
+        if(paused){
+            g.setColor(Color.red);
+            g.drawString("Paused", 100, 100);
+        }
+
         if (gameState == State.Game) {
             hud.render(g);
-        }  else if( gameState == State.Menu || gameState == State.End){
+        } else if (gameState == State.Menu || gameState == State.End || gameState == State.Select) {
             menu.render(g);
         }
 
@@ -106,18 +119,22 @@ public class Game extends Canvas implements Runnable {
     }
 
     private void tick() {
-        handler.tick();
+
         if (gameState == State.Game) {
-            hud.tick();
-            spawner.tick();
-            if(hud.getHEALTH() <= 0){
-                handler.removeAll();
-                gameState = State.End;
-                for(int i = 0; i < 7; i++)
-                    handler.addObject(new MenuParticle(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.Particle,handler));
+            if (!paused) {
+                hud.tick();
+                spawner.tick();
+                handler.tick();
+                if (hud.getHEALTH() <= 0) {
+                    handler.removeAll();
+                    gameState = State.End;
+                    for (int i = 0; i < 7; i++)
+                        handler.addObject(new MenuParticle(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.Particle, handler));
+                }
             }
-        } else if( gameState == State.Menu || gameState == State.End){
+        } else if (gameState == State.Menu || gameState == State.End || gameState == State.Select)  {
             menu.tick();
+            handler.tick();
         }
     }
 

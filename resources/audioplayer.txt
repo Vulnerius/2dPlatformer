@@ -1,0 +1,22 @@
+
+audioPlayer{
+    public static Map<String, Sound> soundMap = new HashMap<>()
+    public static Map<String, Sound> musicMap = new HashMap<>()
+
+    public static void init(){
+    try{
+    soundMap.put("menu_sound", new Sound("resources/click_sound.ogg"));
+
+    musicMap.put("music", new Sound("resources/background_music.ogg"));
+    } catch(Exception e){
+    e.printStackTrace();
+    }
+    }
+
+public static Music getMusic(String key){
+return musicMap.get(key);
+}
+public static Sound getSound(String key){
+return soundMap.get(key);
+}
+}

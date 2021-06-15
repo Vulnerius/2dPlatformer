@@ -7,10 +7,13 @@ public class KeyInput extends KeyAdapter {
     private Handler handler;
     private boolean[] keyDown = new boolean[4];
 
-    public KeyInput(Handler handler) {
+    Game game;
+
+    public KeyInput(Handler handler, Game game) {
         this.handler = handler;
         for (boolean b : keyDown)
             b = false;
+        this.game = game;
     }
 
     public void keyPressed(KeyEvent ke) {
@@ -39,6 +42,10 @@ public class KeyInput extends KeyAdapter {
         }
         if (key == KeyEvent.VK_ESCAPE)
             System.exit(0);
+        if(key == KeyEvent.VK_P) {
+            if(game.gameState == Game.State.Game)
+            Game.paused = !Game.paused;
+        }
     }
 
     public void keyReleased(KeyEvent ke) {
