@@ -1,5 +1,9 @@
 package de.hsmw.main;
 
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -31,7 +35,7 @@ public class Menu extends MouseAdapter {
                 //AudioPlayer.getSound("menu_sound").play();
             }
 
-        if (game.gameState.equals(Game.State.Select) ) {
+        if (game.gameState.equals(Game.State.Select)) {
             //normal difficulty
             if (hovering(mx, my, 220, 140, 100, 50)) {
                 game.setGameState(Game.State.Game);
@@ -42,10 +46,10 @@ public class Menu extends MouseAdapter {
                 hud.setEnemies(1);
                 handler.removeAll();
                 handler.addObject(new Player(WIDTH / 2 - 32, HEIGHT / 2 - 16, ID.Player, handler, hud));
-                handler.addObject(new SmartEnemy(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.BasicEnemy, handler,hud));
+                handler.addObject(new SmartEnemy(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.SmartEnemy, handler, hud));
             }
             //hard difficulty
-            else if ( hovering(mx,my,220, 240, 100, 50)){
+            else if (hovering(mx, my, 220, 240, 100, 50)) {
                 game.setGameState(Game.State.Game);
                 game.difficulty = 1;
                 hud.setHEALTH(100);
@@ -54,14 +58,41 @@ public class Menu extends MouseAdapter {
                 hud.setEnemies(1);
                 handler.removeAll();
                 handler.addObject(new Player(WIDTH / 2 - 32, HEIGHT / 2 - 16, ID.Player, handler, hud));
-                handler.addObject(new FastEnemy(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.BasicEnemy, handler));
+                handler.addObject(new FastEnemy(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.FastEnemy, handler));
+            }
+            //saveState
+            else if (hovering(mx, my, 220, 340, 100, 50)) {
+                game.setGameState(Game.State.Game);
+                handler.removeAll();
+                NodeList list = game.save.readFromSaveState("./saveFiles/saveFile.xml");
+                for (int i = 0; i < list.getLength(); i++) {
+                    Node ele = list.item(i);
+                    Element element = (Element) ele;
+                    String id = element.getAttribute("id");
+                    switch (id) {
+                        case "FastEnemy" -> handler.addObject(new FastEnemy(Float.parseFloat(String.valueOf(element.getAttribute("x"))), Float.parseFloat(String.valueOf(element.getAttribute("y"))), ID.FastEnemy, handler));
+                        case "BasicEnemy" -> handler.addObject(new BasicEnemy(Float.parseFloat(String.valueOf(element.getAttribute("x"))), Float.parseFloat(String.valueOf(element.getAttribute("y"))), ID.BasicEnemy, handler));
+                        case "SmartEnemy" -> handler.addObject(new SmartEnemy(Float.parseFloat(String.valueOf(element.getAttribute("x"))), Float.parseFloat(String.valueOf(element.getAttribute("y"))), ID.SmartEnemy, handler, hud));
+                        case "Player" -> handler.addObject(new Player(Float.parseFloat(String.valueOf(element.getAttribute("x"))), Float.parseFloat(String.valueOf(element.getAttribute("y"))), ID.Player, handler, hud));
+                    }
+                }
+            }
+
+        }
+
+        if (game.gameState.equals(Game.State.Save)) {
+            if (hovering(mx, my, 330, 300, 100, 50)) {
+                game.save.writeToFile();
+            } else if (hovering(mx, my, 250, 120, 150, 64)) {
+                game.setGameState(Game.State.Game);
+                Game.paused = false;
             }
         }
 
         //AudioPlayer.getSound("menu_sound").play();
 
         //try-again Button
-        if (game.gameState.equals(Game.State.End) )
+        if (game.gameState.equals(Game.State.End))
             if (hovering(mx, my, 320, 200, 100, 50)) {
                 //AudioPlayer.getSound("menu_sound").play();
                 game.setGameState(Game.State.Select);
@@ -112,8 +143,15 @@ public class Menu extends MouseAdapter {
             g.drawString("normal", 240, 160);
             g.drawRect(220, 240, 100, 50);
             g.drawString("hard", 240, 260);
+            g.drawRect(220, 340, 100, 50);
+            g.drawString("saveState", 240, 360);
+        } else if (game.gameState.equals(Game.State.Save)) {
+            g.setColor(Color.white);
+            g.setFont(heading3);
+            g.drawRect(330, 300, 100, 50);
+            g.drawString("Save", 340, 320);
+            g.drawRect(250, 120, 150, 64);
+            g.drawString("Back", 270, 160);
         }
-
     }
-
 }

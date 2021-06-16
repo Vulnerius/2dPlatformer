@@ -16,6 +16,9 @@ public abstract class abstractGameObject {
     public abstract void tick();
     public abstract void render(Graphics g);
     public abstract Rectangle getBounds();
+    public String saveState(){
+        return this.toString();
+    }
 
 
     public void setX(float x){
@@ -27,11 +30,9 @@ public abstract class abstractGameObject {
     public void setID(ID id){
         this.id = id;
     }
-
     public void setVelX(float velX) {
         this.velX = velX;
     }
-
     public void setVelY(float velY) {
         this.velY = velY;
     }
@@ -39,20 +40,25 @@ public abstract class abstractGameObject {
     public float getVelX() {
         return velX;
     }
-
     public float getVelY() {
         return velY;
     }
-
     public float getY() {
         return y;
     }
-
     public float getX() {
         return x;
     }
-
     public ID getId() {
         return id;
+    }
+
+    @Override
+    public String toString() {
+        return "abstractGameObject{" +
+                "x=" + x +
+                ", y=" + y +
+                ", id=" + id +
+                '}';
     }
 }

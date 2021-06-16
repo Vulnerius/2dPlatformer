@@ -15,11 +15,13 @@ public class Game extends Canvas implements Runnable {
     private final Menu menu;
     public int difficulty;     //0 = normal 1 = hard
     public static boolean paused = false;
+    public final SaveState save;
 
     public enum State {
         Menu,
         Select,
         Game,
+        Save,
         End,
     }
 
@@ -28,6 +30,7 @@ public class Game extends Canvas implements Runnable {
     public Game() {
         gameState = State.Menu;
         handler = new Handler();
+        save = new SaveState(this,"./saveFiles/saveFile.xml",handler);
         hud = new HUD();
         menu = new Menu(this, handler, hud);
         this.addKeyListener(new KeyInput(handler, this));
@@ -82,7 +85,7 @@ public class Game extends Canvas implements Runnable {
             frames++;
             if (System.currentTimeMillis() - timer > 1000) {
                 timer += 1000;
-                System.out.println("FPS: " + frames);
+                //        System.out.println("FPS: " + frames);
                 frames = 0;
             }
         }
@@ -105,11 +108,12 @@ public class Game extends Canvas implements Runnable {
         if (paused) {
             g.setColor(Color.red);
             g.drawString("Paused", 100, 100);
+            setGameState(State.Save);
         }
 
         if (gameState == State.Game) {
             hud.render(g);
-        } else if (gameState == State.Menu || gameState == State.End || gameState == State.Select) {
+        } else if (gameState.equals(State.Menu) || gameState.equals(State.End) || gameState.equals(State.Select) || gameState.equals(State.Save)) {
             menu.render(g);
         }
 
@@ -131,7 +135,7 @@ public class Game extends Canvas implements Runnable {
                         handler.addObject(new MenuParticle(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.Particle, handler));
                 }
             }
-        } else if (gameState == State.Menu || gameState == State.End || gameState == State.Select) {
+        } else if (gameState.equals(State.Menu) || gameState.equals(State.End) || gameState.equals(State.Select)) {
             handler.tick();
             menu.tick();
         }

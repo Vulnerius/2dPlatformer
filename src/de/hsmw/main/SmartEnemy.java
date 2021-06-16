@@ -7,7 +7,7 @@ public class SmartEnemy extends abstractGameObject {
     private abstractGameObject player;
     private HUD hud;
 
-    public SmartEnemy(int x, int y, ID id, Handler handler, HUD hud) {
+    public SmartEnemy(float x, float y, ID id, Handler handler, HUD hud) {
         super(x, y, id);
         this.handler = handler;
         this.hud = hud;

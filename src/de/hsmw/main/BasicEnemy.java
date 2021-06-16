@@ -3,9 +3,9 @@ package de.hsmw.main;
 import java.awt.*;
 
 public class BasicEnemy extends abstractGameObject{
-    private Handler handler;
+    private final Handler handler;
 
-    public BasicEnemy(int x, int y, ID id, Handler handler) {
+    public BasicEnemy(float x, float y, ID id, Handler handler) {
         super(x, y, id);
         this.setVelX(5);
         this.setVelY(4);

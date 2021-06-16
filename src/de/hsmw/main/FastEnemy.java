@@ -35,5 +35,4 @@ public class FastEnemy extends abstractGameObject{
         public Rectangle getBounds() {
             return new Rectangle((int)x,(int)y,16,16);
         }
-
 }

@@ -8,7 +8,7 @@ public class Player extends abstractGameObject {
     private final Handler handler;
     private HUD hud;
 
-    public Player(int x, int y, ID id, Handler handler, HUD hud) {
+    public Player(float x, float y, ID id, Handler handler, HUD hud) {
         super(x, y, id);
         this.setVelX(0);
         this.setVelY(0);
