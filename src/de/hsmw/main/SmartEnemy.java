@@ -3,7 +3,7 @@ package de.hsmw.main;
 import java.awt.*;
 
 public class SmartEnemy extends abstractGameObject {
-    private Handler handler;
+    private final Handler handler;
     private abstractGameObject player;
 
     public SmartEnemy(int x, int y, ID id, Handler handler) {
@@ -20,8 +20,6 @@ public class SmartEnemy extends abstractGameObject {
     @Override
     public void tick() {
         handler.addObject(new Trail(x, y, ID.Trail, handler, Color.magenta, 16, 16, 0.078f));
-        x += velX;
-        y += velY;
 
         float diffX = x - player.getX();
         float diffY = y - player.getY();
@@ -29,11 +27,14 @@ public class SmartEnemy extends abstractGameObject {
 
         velX = ((-1 / distance) * diffX);
         velY = ((-1 / distance) * diffY);
-
         if (y <= 0 || y >= Game.HEIGHT - 32)
             velY *= -1;
         if (x <= 0 || x >= Game.WIDTH - 32)
             velX *= -1;
+
+        x += velX;
+        y += velY;
+
         for (int i = 0; i < handler.object.size(); i++) {
             abstractGameObject ago = handler.object.get(i);
             if (ago.getId() == ID.SmartEnemy && !(ago.equals(this)))
