@@ -30,8 +30,8 @@ public class Game extends Canvas implements Runnable {
     public Game() {
         gameState = State.Menu;
         handler = new Handler();
-        save = new SaveState(this,"./saveFiles/saveFile.xml",handler);
         hud = new HUD();
+        save = new SaveState(this,"./saveFiles/saveFile.xml",handler,hud);
         menu = new Menu(this, handler, hud);
         this.addKeyListener(new KeyInput(handler, this));
         this.addMouseListener(menu);

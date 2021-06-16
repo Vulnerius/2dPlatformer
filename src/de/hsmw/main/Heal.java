@@ -6,7 +6,7 @@ public class Heal extends abstractGameObject {
     private final Handler handler;
     private HUD hud;
 
-    public Heal(int x, int y, ID id, Handler handler, HUD hud) {
+    public Heal(float x, float y, ID id, Handler handler, HUD hud) {
         super(x, y, id);
         this.handler = handler;
         this.hud = hud;

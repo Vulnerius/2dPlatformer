@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <newGame>
-    <GameObject id="Player" x="528.0" y="373.0"/>
-    <GameObject id="SmartEnemy" x="17.315918" y="416.9317"/>
-    <GameObject id="BasicEnemy" x="443.0" y="2.0"/>
+    <GameObject Enemies="1" Health="100.0" Level="1" Score="79" id="HUD"/>
+    <GameObject id="Player" x="478.0" y="132.0"/>
+    <GameObject id="SmartEnemy" x="230.63077" y="159.99713"/>
 </newGame>

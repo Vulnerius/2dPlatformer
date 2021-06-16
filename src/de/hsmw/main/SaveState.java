@@ -20,14 +20,17 @@ public class SaveState {
     private final Game game;
     private final File saveFile;
     private final Handler handler;
+    private HUD headsUp;
 
-    public SaveState(Game game, String file, Handler handler){
+    public SaveState(Game game, String file, Handler handler, HUD hud) {
         this.game = game;
         this.handler = handler;
         saveFile = new File(file);
+        headsUp = hud;
     }
-    public void outputFormatter(Document outputDoc, File outputFile){
-        try{
+
+    public void outputFormatter(Document outputDoc, File outputFile) {
+        try {
             DOMSource src = new DOMSource(outputDoc);
             StreamResult result = new StreamResult(outputFile);
             TransformerFactory transfac = TransformerFactory.newInstance();
@@ -35,22 +38,29 @@ public class SaveState {
 
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             transformer.setOutputProperty("{https://xml.apache.org/xlst}indent-amount", "4");
-            transformer.transform(src,result);
-        }catch (Exception e){
+            transformer.transform(src, result);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    public void writeToFile(){
+
+    public void writeToFile() {
         List<abstractGameObject> objectsList = new ArrayList<>(handler.object);
         DocumentBuilderFactory outputFac = DocumentBuilderFactory.newInstance();
         try {
             DocumentBuilder builder = outputFac.newDocumentBuilder();
             Document outputDoc = builder.newDocument();
             Element ouRoot = outputDoc.createElement("newGame");
+            Element hud = outputDoc.createElement("GameObject");
+            hud.setAttribute("id", "HUD");
+            hud.setAttribute("Health", String.valueOf(headsUp.HEALTH));
+            hud.setAttribute("Enemies", String.valueOf(headsUp.getEnemies()));
+            hud.setAttribute("Score", String.valueOf(headsUp.getScore()));
+            hud.setAttribute("Level", String.valueOf(headsUp.getLevel()));
+            ouRoot.appendChild(hud);
+            for (abstractGameObject o : objectsList) {
 
-            for(abstractGameObject o : objectsList){
-
-                if(o.getId() != ID.Trail) {
+                if (o.getId() != ID.Trail) {
                     Element gameObject = outputDoc.createElement("GameObject");
                     gameObject.setAttribute("x", String.valueOf(o.getX()));
                     gameObject.setAttribute("y", String.valueOf(o.getY()));
@@ -61,27 +71,23 @@ public class SaveState {
             }
 
             outputDoc.appendChild(ouRoot);
-            outputFormatter(outputDoc,saveFile);
+            outputFormatter(outputDoc, saveFile);
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
         }
     }
 
-    public NodeList readFromSaveState(String filePath){
-        try{
+    public NodeList readFromSaveState(String filePath) {
+        try {
             File input = new File(filePath);
             DocumentBuilderFactory outputFac = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = outputFac.newDocumentBuilder();
             Document outputDoc = builder.parse(input);
             return outputDoc.getElementsByTagName("GameObject");
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
-    }
-
-    public void createGame(){
-
     }
 
 }

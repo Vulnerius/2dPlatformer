@@ -36,15 +36,15 @@ public class Player extends abstractGameObject {
                 }
             } else if (abg.getId() == ID.FastEnemy) {
                 if (getBounds().intersects(abg.getBounds())) {
-                    hud.setHEALTH(hud.getHEALTH() - 3);
+                    hud.setHEALTH(hud.getHEALTH() - 2);
                 }
             } else if (abg.getId() == ID.SmartEnemy) {
                 if (getBounds().intersects(abg.getBounds())) {
-                    hud.setHEALTH(hud.getHEALTH() - 5);
+                    hud.setHEALTH(hud.getHEALTH() - 3);
                 }
             } else if (abg.getId() == ID.Boss) {
                 if (getBounds().intersects(abg.getBounds())) {
-                    hud.setHEALTH(hud.getHEALTH() - 7);
+                    hud.setHEALTH(hud.getHEALTH() - 5);
                 }
             }
         }

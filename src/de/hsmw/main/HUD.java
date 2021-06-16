@@ -4,11 +4,11 @@ package de.hsmw.main;
 import java.awt.*;
 
 public class HUD {
-    public float HEALTH = 100;
+    public float HEALTH = 3;
     private float greenValue = 255;
-    private int score = 0;
-    private int level = 1;
-    private int enemies = 1;
+    private int score;
+    private int level;
+    private int enemies;
 
     public void tick(){
         HEALTH = Game.clamp(HEALTH,0,100);

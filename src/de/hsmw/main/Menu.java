@@ -28,17 +28,17 @@ public class Menu extends MouseAdapter {
         int mx = me.getX();
         int my = me.getY();
 
-        //play-Button
-        if (game.gameState.equals(Game.State.Menu))
+        if (game.gameState.equals(Game.State.Menu)) {
+            //play Button
             if (hovering(mx, my, 250, 120, 150, 64)) {
                 game.setGameState(Game.State.Select);
                 //AudioPlayer.getSound("menu_sound").play();
             }
+        }
 
         if (game.gameState.equals(Game.State.Select)) {
             //normal difficulty
             if (hovering(mx, my, 220, 140, 100, 50)) {
-                game.setGameState(Game.State.Game);
                 game.difficulty = 0;
                 hud.setHEALTH(100);
                 hud.setScore(0);
@@ -47,10 +47,10 @@ public class Menu extends MouseAdapter {
                 handler.removeAll();
                 handler.addObject(new Player(WIDTH / 2 - 32, HEIGHT / 2 - 16, ID.Player, handler, hud));
                 handler.addObject(new SmartEnemy(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.SmartEnemy, handler, hud));
+                game.setGameState(Game.State.Game);
             }
             //hard difficulty
             else if (hovering(mx, my, 220, 240, 100, 50)) {
-                game.setGameState(Game.State.Game);
                 game.difficulty = 1;
                 hud.setHEALTH(100);
                 hud.setScore(0);
@@ -59,31 +59,46 @@ public class Menu extends MouseAdapter {
                 handler.removeAll();
                 handler.addObject(new Player(WIDTH / 2 - 32, HEIGHT / 2 - 16, ID.Player, handler, hud));
                 handler.addObject(new FastEnemy(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.FastEnemy, handler));
+                game.setGameState(Game.State.Game);
             }
             //saveState
             else if (hovering(mx, my, 220, 340, 100, 50)) {
-                game.setGameState(Game.State.Game);
                 handler.removeAll();
                 NodeList list = game.save.readFromSaveState("./saveFiles/saveFile.xml");
                 for (int i = 0; i < list.getLength(); i++) {
                     Node ele = list.item(i);
                     Element element = (Element) ele;
-                    String id = element.getAttribute("id");
-                    switch (id) {
-                        case "FastEnemy" -> handler.addObject(new FastEnemy(Float.parseFloat(String.valueOf(element.getAttribute("x"))), Float.parseFloat(String.valueOf(element.getAttribute("y"))), ID.FastEnemy, handler));
-                        case "BasicEnemy" -> handler.addObject(new BasicEnemy(Float.parseFloat(String.valueOf(element.getAttribute("x"))), Float.parseFloat(String.valueOf(element.getAttribute("y"))), ID.BasicEnemy, handler));
-                        case "SmartEnemy" -> handler.addObject(new SmartEnemy(Float.parseFloat(String.valueOf(element.getAttribute("x"))), Float.parseFloat(String.valueOf(element.getAttribute("y"))), ID.SmartEnemy, handler, hud));
-                        case "Player" -> handler.addObject(new Player(Float.parseFloat(String.valueOf(element.getAttribute("x"))), Float.parseFloat(String.valueOf(element.getAttribute("y"))), ID.Player, handler, hud));
+
+
+                    if (element.getTagName().equals("GameObject")) {
+                        String id = element.getAttribute("id");
+                        switch (id) {
+                            case "HUD" -> {
+                                hud.setEnemies(Integer.parseInt(element.getAttribute("Enemies")));
+                                hud.setHEALTH(Float.parseFloat(element.getAttribute("Health")));
+                                hud.setLevel(Integer.parseInt(element.getAttribute("Level")));
+                                hud.setScore(Integer.parseInt(element.getAttribute("Score")));
+                            }
+                            case "FastEnemy" -> handler.addObject(new FastEnemy(Float.parseFloat(String.valueOf(element.getAttribute("x"))), Float.parseFloat(String.valueOf(element.getAttribute("y"))), ID.FastEnemy, handler));
+                            case "BasicEnemy" -> handler.addObject(new BasicEnemy(Float.parseFloat(String.valueOf(element.getAttribute("x"))), Float.parseFloat(String.valueOf(element.getAttribute("y"))), ID.BasicEnemy, handler));
+                            case "SmartEnemy" -> handler.addObject(new SmartEnemy(Float.parseFloat(String.valueOf(element.getAttribute("x"))), Float.parseFloat(String.valueOf(element.getAttribute("y"))), ID.SmartEnemy, handler, hud));
+                            case "Player" -> handler.addObject(new Player(Float.parseFloat(String.valueOf(element.getAttribute("x"))), Float.parseFloat(String.valueOf(element.getAttribute("y"))), ID.Player, handler, hud));
+                            case "Heal" -> handler.addObject(new Heal(Float.parseFloat(String.valueOf(element.getAttribute("x"))), Float.parseFloat(String.valueOf(element.getAttribute("y"))), ID.Heal, handler, hud));
+                            case "Boss" -> handler.addObject(new Boss(Float.parseFloat(String.valueOf(element.getAttribute("x"))), Float.parseFloat(String.valueOf(element.getAttribute("y"))), ID.Boss, handler));
+                        }
                     }
                 }
+                game.setGameState(Game.State.Game);
             }
-
         }
 
         if (game.gameState.equals(Game.State.Save)) {
-            if (hovering(mx, my, 330, 300, 100, 50)) {
+            //saving
+            if (hovering(mx, my, 330, 120, 100, 50)) {
                 game.save.writeToFile();
-            } else if (hovering(mx, my, 250, 120, 150, 64)) {
+            }
+            //back
+            else if (hovering(mx, my, 330, 300, 100, 50)) {
                 game.setGameState(Game.State.Game);
                 Game.paused = false;
             }
@@ -144,14 +159,15 @@ public class Menu extends MouseAdapter {
             g.drawRect(220, 240, 100, 50);
             g.drawString("hard", 240, 260);
             g.drawRect(220, 340, 100, 50);
-            g.drawString("saveState", 240, 360);
+            g.setFont(new Font("verdana", Font.BOLD, 15));
+            g.drawString("saveState", 230, 380);
         } else if (game.gameState.equals(Game.State.Save)) {
             g.setColor(Color.white);
             g.setFont(heading3);
+            g.drawRect(330, 120, 100, 50);
+            g.drawString("Save", 340, 140);
             g.drawRect(330, 300, 100, 50);
-            g.drawString("Save", 340, 320);
-            g.drawRect(250, 120, 150, 64);
-            g.drawString("Back", 270, 160);
+            g.drawString("Back", 340, 340);
         }
     }
 }
