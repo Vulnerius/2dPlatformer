@@ -20,7 +20,7 @@ public class KeyInput extends KeyAdapter {
         int key = ke.getKeyCode();
         for (int i = 0; i < handler.object.size(); i++) {
             abstractGameObject tempObj = handler.object.get(i);
-            if (tempObj.getId() == ID.Player) {
+            if (tempObj.getId().equals(ID.Player)) {
                 //keyEvent Player1
                 if (key == KeyEvent.VK_W) {
                     tempObj.setVelY((-5));
@@ -43,11 +43,12 @@ public class KeyInput extends KeyAdapter {
         if (key == KeyEvent.VK_ESCAPE)
             System.exit(0);
         if(key == KeyEvent.VK_P) {
-            if(game.gameState == Game.State.Game)
+            if(game.gameState.equals(Game.State.Game))
             Game.paused = !Game.paused;
         }
         if(key == KeyEvent.VK_R){
-            game.setGameState(Game.State.Menu);
+            game.setGameState(Game.State.Select);
+            handler.removeAll();
         }
     }
 
@@ -56,7 +57,7 @@ public class KeyInput extends KeyAdapter {
         for (int i = 0; i < handler.object.size(); i++) {
             abstractGameObject tempObj = handler.object.get(i);
 
-            if (tempObj.getId() == ID.Player) {
+            if (tempObj.getId().equals(ID.Player)) {
                 //keyEvent Player1
                 if (key == KeyEvent.VK_W)
                     keyDown[0] = false;

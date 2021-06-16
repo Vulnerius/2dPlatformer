@@ -13,8 +13,7 @@ public class Game extends Canvas implements Runnable {
     private final HUD hud;
     private final Spawn spawner;
     private final Menu menu;
-    public int diff = 0;
-    //0 = normal 1 = hard
+    public int difficulty;     //0 = normal 1 = hard
     public static boolean paused = false;
 
     public enum State {
@@ -24,15 +23,15 @@ public class Game extends Canvas implements Runnable {
         End,
     }
 
-    public State gameState = State.Menu;
+    public State gameState;
 
     public Game() {
+        gameState = State.Menu;
         handler = new Handler();
         hud = new HUD();
         menu = new Menu(this, handler, hud);
         this.addKeyListener(new KeyInput(handler, this));
         this.addMouseListener(menu);
-
 //        AudioPlayer.load();
         //Audioplayer.get("music").loop();
 

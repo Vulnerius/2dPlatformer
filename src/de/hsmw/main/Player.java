@@ -10,6 +10,8 @@ public class Player extends abstractGameObject {
 
     public Player(int x, int y, ID id, Handler handler, HUD hud) {
         super(x, y, id);
+        this.setVelX(0);
+        this.setVelY(0);
         this.handler = handler;
         this.hud = hud;
     }

@@ -5,16 +5,17 @@ import java.awt.*;
 public class SmartEnemy extends abstractGameObject {
     private final Handler handler;
     private abstractGameObject player;
+    private HUD hud;
 
-    public SmartEnemy(int x, int y, ID id, Handler handler) {
+    public SmartEnemy(int x, int y, ID id, Handler handler, HUD hud) {
         super(x, y, id);
         this.handler = handler;
+        this.hud = hud;
 
         for (int i = 0; i < handler.object.size(); i++) {
-            if (handler.object.get(i).getId() == ID.Player)
+            if (handler.object.get(i).getId().equals(ID.Player))
                 player = handler.object.get(i);
         }
-
     }
 
     @Override
@@ -25,21 +26,24 @@ public class SmartEnemy extends abstractGameObject {
         float diffY = y - player.getY();
         float distance = (float) Math.sqrt((x - player.getX()) * (x - player.getX()) + (y - player.getY()) * (y - player.getY()));
 
-        velX = ((-1 / distance) * diffX);
-        velY = ((-1 / distance) * diffY);
-        if (y <= 0 || y >= Game.HEIGHT - 32)
-            velY *= -1;
-        if (x <= 0 || x >= Game.WIDTH - 32)
-            velX *= -1;
+        this.setVelX((-1 / distance) * diffX);
+        this.setVelY((-1 / distance) * diffY);
 
         x += velX;
         y += velY;
 
+        if (y <= 0 || y >= Game.HEIGHT - 32)
+            velY *= -1;
+        if (x <= 0 || x >= Game.WIDTH - 48)
+            velX *= -1;
+
         for (int i = 0; i < handler.object.size(); i++) {
             abstractGameObject ago = handler.object.get(i);
-            if (ago.getId() == ID.SmartEnemy && !(ago.equals(this)))
-                if (getBounds().equals(ago.getBounds()))
+            if (ago.getId().equals(ID.SmartEnemy) && !(ago.equals(this)))
+                if (getBounds().intersects(ago.getBounds())) {
                     handler.removeObject(this);
+                    hud.setEnemies(hud.getEnemies() - 1);
+                }
         }
     }
 

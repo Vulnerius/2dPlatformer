@@ -8,9 +8,10 @@ public class FastEnemy extends abstractGameObject{
 
         public FastEnemy(float x, float y, ID id, Handler handler) {
             super(x, y, id);
+            this.setVelX(7);
+            this.setVelY(6);
             this.handler = handler;
-            velX = 7;
-            velY = 7;
+
         }
 
         @Override
@@ -18,9 +19,9 @@ public class FastEnemy extends abstractGameObject{
             handler.addObject(new Trail(x,y,ID.Trail, handler, Color.cyan, 16,16,0.083f));
             x += velX;
             y += velY;
-            if( y <= 0 || y>= Game.HEIGHT - 32)
+            if( y <= 0 || y>= Game.HEIGHT - 48)
                 velY *=-1;
-            if( x <= 0 || x>= Game.WIDTH - 32)
+            if( x <= 0 || x>= Game.WIDTH - 64)
                 velX *=-1;
         }
 

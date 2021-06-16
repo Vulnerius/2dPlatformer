@@ -25,34 +25,33 @@ public class Menu extends MouseAdapter {
         int my = me.getY();
 
         //play-Button
-        if (game.gameState == Game.State.Menu)
+        if (game.gameState.equals(Game.State.Menu))
             if (hovering(mx, my, 250, 120, 150, 64)) {
                 game.setGameState(Game.State.Select);
                 //AudioPlayer.getSound("menu_sound").play();
             }
-        if (game.gameState == Game.State.Select) {
-            handler.addObject(new Player(WIDTH / 2 - 32, HEIGHT / 2 - 16, ID.Player, handler, hud));
-            handler.addObject(new SmartEnemy(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.BasicEnemy, handler));
-            handler.addObject(new FastEnemy(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.BasicEnemy, handler));
-            handler.addObject(new BasicEnemy(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.BasicEnemy, handler));
+
+        if (game.gameState.equals(Game.State.Select) ) {
             //normal difficulty
             if (hovering(mx, my, 220, 140, 100, 50)) {
                 game.setGameState(Game.State.Game);
-                game.diff = 0;
+                game.difficulty = 0;
                 hud.setHEALTH(100);
                 hud.setScore(0);
-                hud.setLevel(14);
+                hud.setLevel(1);
+                hud.setEnemies(1);
                 handler.removeAll();
                 handler.addObject(new Player(WIDTH / 2 - 32, HEIGHT / 2 - 16, ID.Player, handler, hud));
-                handler.addObject(new SmartEnemy(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.BasicEnemy, handler));
+                handler.addObject(new SmartEnemy(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.BasicEnemy, handler,hud));
             }
             //hard difficulty
             else if ( hovering(mx,my,220, 240, 100, 50)){
                 game.setGameState(Game.State.Game);
-                game.diff = 1;
+                game.difficulty = 1;
                 hud.setHEALTH(100);
                 hud.setScore(0);
-                hud.setLevel(14);
+                hud.setLevel(1);
+                hud.setEnemies(1);
                 handler.removeAll();
                 handler.addObject(new Player(WIDTH / 2 - 32, HEIGHT / 2 - 16, ID.Player, handler, hud));
                 handler.addObject(new FastEnemy(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.BasicEnemy, handler));
@@ -62,14 +61,13 @@ public class Menu extends MouseAdapter {
         //AudioPlayer.getSound("menu_sound").play();
 
         //try-again Button
-        if (game.gameState == Game.State.End)
+        if (game.gameState.equals(Game.State.End) )
             if (hovering(mx, my, 320, 200, 100, 50)) {
                 //AudioPlayer.getSound("menu_sound").play();
                 game.setGameState(Game.State.Select);
-                hud.setHEALTH(100);
+                //hud.setHEALTH(100);
                 handler.removeAll();
-                handler.addObject(new Player(WIDTH / 2 - 32, HEIGHT / 2 - 16, ID.Player, handler, hud));
-                handler.addObject(new SmartEnemy(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.BasicEnemy, handler));
+                hud.setEnemies(1);
             }
 
     }
@@ -94,19 +92,19 @@ public class Menu extends MouseAdapter {
         Font heading3 = new Font("verdana", Font.BOLD, 18);
         g.setColor(Color.white);
         g.setFont(heading);
-        if (game.gameState == Game.State.Menu) {
+        if (game.gameState.equals(Game.State.Menu)) {
             g.drawString("Menu", 100, 100);
             g.drawRect(250, 120, 150, 64);
             g.setFont(heading2);
             g.drawString("Play", 270, 160);
-        } else if (game.gameState == Game.State.End) {
+        } else if (game.gameState.equals(Game.State.End)) {
             g.setFont(heading);
             g.drawString("Game Over", 50, 50);
             g.setFont(heading3);
             g.drawString("You lost with a score of: " + hud.getScore(), 240, 160);
             g.drawRect(320, 200, 100, 50);
             g.drawString("Try again", 320, 230);
-        } else if (game.gameState == Game.State.Select) {
+        } else if (game.gameState.equals(Game.State.Select)) {
             g.setFont(heading2);
             g.drawString("Select difficulty", 50, 50);
             g.setFont(heading3);

@@ -7,9 +7,10 @@ public class BasicEnemy extends abstractGameObject{
 
     public BasicEnemy(int x, int y, ID id, Handler handler) {
         super(x, y, id);
+        this.setVelX(5);
+        this.setVelY(4);
         this.handler = handler;
-        velX = 5;
-        velY = 5;
+
     }
 
     @Override
@@ -17,9 +18,9 @@ public class BasicEnemy extends abstractGameObject{
         handler.addObject(new Trail(x,y,ID.Trail, handler, Color.red, 16,16,0.032f));
         x += velX;
         y += velY;
-        if( y <= 0 || y>= Game.HEIGHT - 32)
+        if( y <= 0 || y>= Game.HEIGHT - 48)
             velY *=-1;
-        if( x <= 0 || x>= Game.WIDTH - 32)
+        if( x <= 0 || x>= Game.WIDTH - 64)
             velX *=-1;
     }
 
