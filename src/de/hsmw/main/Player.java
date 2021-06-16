@@ -25,22 +25,24 @@ public class Player extends abstractGameObject {
     }
 
     private void collision() {
-        for (abstractGameObject abg : handler.object) {
+        for (int i = 0; i < handler.object.size(); i++) {
+            abstractGameObject abg = handler.object.get(i);
+
             if (abg.getId() == ID.BasicEnemy) {
                 if (getBounds().intersects(abg.getBounds())) {
-                    hud.setHEALTH(hud.getHEALTH() -1);
+                    hud.setHEALTH(hud.getHEALTH() - 1);
                 }
             } else if (abg.getId() == ID.FastEnemy) {
                 if (getBounds().intersects(abg.getBounds())) {
-                    hud.setHEALTH(hud.getHEALTH() -3);
+                    hud.setHEALTH(hud.getHEALTH() - 3);
                 }
-            } else if (abg.getId() == ID.SmartEnemy){
+            } else if (abg.getId() == ID.SmartEnemy) {
                 if (getBounds().intersects(abg.getBounds())) {
-                    hud.setHEALTH(hud.getHEALTH() -5);
+                    hud.setHEALTH(hud.getHEALTH() - 5);
                 }
-            } else if(abg.getId() == ID.Boss){
+            } else if (abg.getId() == ID.Boss) {
                 if (getBounds().intersects(abg.getBounds())) {
-                    hud.setHEALTH(hud.getHEALTH() -7);
+                    hud.setHEALTH(hud.getHEALTH() - 7);
                 }
             }
         }
@@ -58,12 +60,12 @@ public class Player extends abstractGameObject {
         if (id == ID.Player2)
             g.setColor(Color.blue);
 
-        g.fillRect((int)x, (int)y, 32, 32);
+        g.fillRect((int) x, (int) y, 32, 32);
     }
 
     @Override
     public Rectangle getBounds() {
-        return new Rectangle((int)x,(int) y, 32, 32);
+        return new Rectangle((int) x, (int) y, 32, 32);
     }
 
 }

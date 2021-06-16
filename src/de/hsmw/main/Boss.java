@@ -38,7 +38,7 @@ public class Boss extends abstractGameObject{
 
     @Override
     public void render(Graphics g) {
-        g.setColor(Color.red);
+        g.setColor(new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255)));
         g.fillRect((int)x,(int)y,48,48);
     }
 
